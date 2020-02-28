@@ -1,0 +1,5 @@
+pandas
+plotly
+cufflinks
+python-dotenv
+eikon
