@@ -3,3 +3,5 @@ plotly
 cufflinks
 python-dotenv
 eikon
+urllib
+json
