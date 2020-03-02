@@ -52,6 +52,43 @@ def eia_stocks():
         return df
 
 
+def eia_release_analysis():
+    """
+    Determine if stocks are bullish/bearish relative to Reuters poll
+    :return:
+    """
+
+    d = ek.get_data(['USOILC=ECI', 'USOILG=ECI', 'USOILD=ECI'], fields=['CTBTR_1', 'RTR_POLL'])
+    d = d[0]
+    d = d.rename(columns={'CTBTR_1': 'Actual', 'RTR_POLL': 'Expected'})
+    d = d.replace({'USOILC=ECI': 'Crude', 'USOILG=ECI': 'Gas', 'USOILD=ECI': 'Distillate'})
+    d['Direction'] = d.apply(lambda x: eia_bullish_bearish(x.Actual, x.Expected), 1)
+
+    return d
+
+
+def eia_bullish_bearish(actual, expected):
+    if pd.isnull(expected):
+        return ''
+
+    v = 'Neutral'
+    if actual > 0:
+        v = 'Bearish'
+    else:
+        v = 'Bullish'
+
+    if not pd.isnull(expected):
+        diff = actual - expected
+        if diff >= -0.25 and diff <= 0.25 : # is within 250kb of poll, mark as neutral
+            v = 'Neutral'
+        if v == 'Bearish' and diff < -0.25:
+            v = 'Bullish' # build smaller than expected
+        if v == 'Bullish' and diff > 0.25:
+            v = 'Bearish' # draw smaller than expected
+
+    return v
+
+
 def paj_stock():
     # todo
     # https://stats.paj.gr.jp/en/pub/index.html
