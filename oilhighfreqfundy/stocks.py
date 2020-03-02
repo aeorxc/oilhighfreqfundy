@@ -15,6 +15,7 @@ start_date = '2010-01-01'
 
 
 def ara_stocks(start_date=start_date):
+    # note crude is from Genscape but is a subscription: 0#GNS-ARC-STOR
     rics = ['STK-GL-ARA', 'STK-NAF-ARA', 'STK-GO-ARA', 'STK-FO-ARA', 'STK-JET-ARA']
     df = ek.get_timeseries(rics, fields='Close', start_date=start_date)
     return df
