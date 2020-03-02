@@ -3,6 +3,7 @@ import eikon as ek
 import os
 import urllib
 import json
+from oilhighfreqfundy import symbols
 
 eikonkey = os.environ['EIKON_KEY']
 ek.set_app_key(eikonkey)
@@ -35,9 +36,8 @@ def eia_stocks():
     # symbols from
     # http://ir.eia.gov/wpsr/psw01.xls
     # http://ir.eia.gov/wpsr/psw04.xls
-    symbols = ['PET.WCRSTUS1.W','PET.WCESTUS1.W','PET.WCSSTUS1.W','PET.WGTSTUS1.W','PET.WGRSTUS1.W','PET.WG4ST_NUS_1.W','PET.WBCSTUS1.W','PET.W_EPOOXE_SAE_NUS_MBBL.W','PET.WKJSTUS1.W','PET.WDISTUS1.W','PET.WD0ST_NUS_1.W','PET.WD1ST_NUS_1.W','PET.WDGSTUS1.W','PET.WRESTUS1.W','PET.WPRSTUS1.W','PET.W_EPPO6_SAE_NUS_MBBL.W','PET.WUOSTUS1.W','PET.WTTSTUS1.W','PET.WTESTUS1.W','PET.WCRSTUS1.W','PET.WCESTUS1.W','PET.WCESTP11.W','PET.WCESTP21.W','PET.W_EPC0_SAX_YCUOK_MBBL.W','PET.WCESTP31.W','PET.WCESTP41.W','PET.WCESTP51.W','PET.W_EPC0_SKA_NUS_MBBL.W','PET.WCSSTUS1.W','PET.WGTSTUS1.W','PET.WGRSTUS1.W','PET.WG4ST_NUS_1.W','PET.WBCSTUS1.W','PET.W_EPOOXE_SAE_NUS_MBBL.W','PET.WKJSTUS1.W','PET.WDISTUS1.W','PET.WD0ST_NUS_1.W','PET.WD1ST_NUS_1.W','PET.WDGSTUS1.W','PET.WRESTUS1.W','PET.WPRSTUS1.W','PET.W_EPPO6_SAE_NUS_MBBL.W','PET.WUOSTUS1.W','PET.WTTSTUS1.W','PET.WTESTUS1.W']
 
-    u = eia_series_url.format(eia_api_key, ';'.join(symbols))
+    u = eia_series_url.format(eia_api_key, ';'.join(list(symbols.eia_symbols.keys())))
     contents = urllib.request.urlopen(u)
     j = json.load(contents)
     dfs = []
@@ -49,3 +49,11 @@ def eia_stocks():
         df = pd.concat(dfs, 1)
 
         return df
+
+
+def paj_stock():
+    # todo
+    # https://stats.paj.gr.jp/en/pub/index.html
+    # platts code in Reuters AALOL00
+    pass
+
