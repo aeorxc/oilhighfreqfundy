@@ -60,7 +60,7 @@ def eia_release_analysis():
 
     d = ek.get_data(['USOILC=ECI', 'USOILG=ECI', 'USOILD=ECI'], fields=['CTBTR_1', 'RTR_POLL'])
     d = d[0]
-    d = d.rename(columns={'CTBTR_1': 'Actual', 'RTR_POLL': 'Expected'})
+    d = d.rename(columns={'ECON_ACT': 'Actual', 'RTR_POLL': 'Expected'})
     d = d.replace({'USOILC=ECI': 'Crude', 'USOILG=ECI': 'Gas', 'USOILD=ECI': 'Distillate'})
     d['Direction'] = d.apply(lambda x: eia_bullish_bearish(x.Actual, x.Expected), 1)
 
