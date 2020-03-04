@@ -58,7 +58,7 @@ def eia_release_analysis():
     :return:
     """
 
-    d = ek.get_data(['USOILC=ECI', 'USOILG=ECI', 'USOILD=ECI'], fields=['CTBTR_1', 'RTR_POLL'])
+    d = ek.get_data(['USOILC=ECI', 'USOILG=ECI', 'USOILD=ECI'], fields=['ECON_ACT', 'RTR_POLL'])
     d = d[0]
     d = d.rename(columns={'ECON_ACT': 'Actual', 'RTR_POLL': 'Expected'})
     d = d.replace({'USOILC=ECI': 'Crude', 'USOILG=ECI': 'Gas', 'USOILD=ECI': 'Distillate'})

@@ -1,7 +1,8 @@
 from oilhighfreqfundy import stocks
 import unittest
 import pandas as pd
-
+import eikon as ek
+import os
 
 class TestMP(unittest.TestCase):
 
@@ -39,6 +40,13 @@ class TestMP(unittest.TestCase):
         res = stocks.eia_bullish_bearish(-1, -1.5)
         self.assertEqual('Bearish', res)
 
+    def test_eia_release_analysis(self):
+
+        eikonkey = os.environ['EIKON_KEY']
+        ek.set_app_key(eikonkey)
+
+        d = stocks.eia_release_analysis()
+        self.assertTrue(isinstance(d, pd.DataFrame))
 
 
 if __name__ == '__main__':
